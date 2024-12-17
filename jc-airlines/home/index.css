@@ -1,0 +1,164 @@
+* {
+    box-sizing: border-box;
+  }  
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family:Verdana;
+  }
+  
+  .bg {
+    background-image: url(../pictures/background.png);
+    height: 45%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  footer {
+    height: auto;
+  }
+
+  header {
+    background-color:#f1f1f1;
+    padding:15px;
+  }
+
+  .fastTravel {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin: 20px;
+    max-width: 300px;
+    padding: 16px;
+    background-color: #CCD1E6;
+    border-radius: 20px;
+    color: #000000;
+  }
+
+  .SUBMIT {
+    background-color: #4F6082;
+    border-radius: 10px;
+    padding: 15px;
+    color: #ffff;
+  }
+
+  .fast1 {
+    text-align: left;
+  }
+
+  .fast2 {
+    text-align: center;
+  }
+
+  .inputs {
+    width: 75%;
+  }
+
+  .menu {
+    overflow: hidden;
+  }
+
+  .menuitem {
+    float: right;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .menuitem:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .menuitem.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .menuitem {
+    padding: 8px;
+    margin-top: 7px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .container {
+    padding: 64px;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both
+  }
+  
+  .column-66 {
+    float: left;
+    width: 66.66666%;
+    padding: 10px;
+  }
+  
+  .column-33 {
+    float: left;
+    width: 33.33333%;
+    padding: 20px;
+  }
+
+  /* Create three equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 28%;
+    padding: 10px;
+  }
+  
+  .columnr {
+    color: #A0A0A0;
+    right: 0;
+    bottom: 0;
+    float: left;
+    width: 15%;
+    padding: 10px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .large-font {
+    font-size: 48px;
+  }
+  
+  .xlarge-font {
+    font-size: 64px
+  }
+  
+  .button {
+    border: none;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #04AA6D;
+  }
+  
+  img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+  
+  @media only screen and (max-width:800px) {
+    /* For tablets: */
+
+  }
+  @media only screen and (max-width:500px) {
+    /* For mobile phones: */
+
+  }
+  
