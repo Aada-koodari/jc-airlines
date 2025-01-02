@@ -2,24 +2,23 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="index.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../all.css">
     <title>JC-Airlines</title>
     <link rel="icon" type="image/x-icon" href="../pictures/logo.png">
 </head>
 <body>
 
 <header>
-    <img src="../pictures/logo+name.png" alt="logo and name" href="index.html">
+    <img src="../pictures/logo+name.png" alt="logo and name" href="index.php">
     <div class="menu">
-        <div class="menuitem" href="../help/help.html">Help</div>
-        <div class="menuitem" href="../company/company.html">Company</div>
-        <div class="menuitem" href="../shops&dining/shops&dining.html">Shops & Dining</div>
-        <div class="menuitem" href="../flights/flights.html">Flights</div>
+        <div class="menuitem" href="../help/help.php">Help</div>
+        <div class="menuitem" href="../company/company.php">Company</div>
+        <div class="menuitem" href="../shops&dining/shops&dining.php">Shops & Dining</div>
+        <div class="menuitem" href="../flights/flights.php">Flights</div>
     </div>
 </header>
 
-<div class="bg">
+<div class="bghome">
   <form  action="/action_page.php" class="fastTravel">
       <div class="fast1">
         <span for="destination1" style="padding-right: 20px;">From: </span>
