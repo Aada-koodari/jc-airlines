@@ -3,6 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../all.css">
+    <script src="../all.js"></script>
     <title>JC-Airlines</title>
     <link rel="icon" type="image/x-icon" href="../pictures/logo.png">
 </head>
@@ -42,7 +43,7 @@
       </div>
       <br>
       <div class="fast2">
-        <input type="submit" id="submit" class="SUBMIT">
+        <input type="submit" id="submit" class="SUBMIT" value="Find Flights">
       </div>
   </form>
 </div>
