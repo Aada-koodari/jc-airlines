@@ -31,7 +31,7 @@
             </div>
             <div class="collumn-fs">
               <p class="theText">From: </p>
-              <select name="from" id="from" class="inputs">
+              <select name="from" id="Kaupunki" class="inputs">
                   <option value="" disabled selected>Select your option</option>
                   <option value="helsinki">Helsinki</option>
                   <option value="arlanda">Arlanda</option>
@@ -39,7 +39,7 @@
                   <option value="keflavik">Keflavik</option>
               </select>
               <p class="theText">To: </p>
-              <select name="to" id="to" class="inputs">
+              <select name="to" id="Kohdemaa" class="inputs">
                   <option value="" disabled selected>Select your option</option>
                   <option value="helsinki">Helsinki</option>
                   <option value="arlanda">Arlanda</option>
@@ -56,29 +56,31 @@
     </form>
 
     <div id="overlay">
-      <div id="overlayContent">
-        <button class="closeButton" onclick="off()">×</button>
-        <h1>Helsinki (HEL) → Stockholm (ARN)</h1>
-        <p>Sun, 2/2 - x Available seats left (TIME)</p>
-        <div class="flightDetails">
-          <h2>View your flight details</h2>
-          <div class="flightInfo">
-            <p><strong>Depart</strong>: Sun, 2/2</p>
-            <p>6:00 PM HEL → 6:00 PM ARN (Duration: 1h 0m)</p>
-            <p><strong>Norwegian Air Shuttle</strong></p>
+      <form>
+        <div id="overlayContent">
+          <button class="closeButton" onclick="off()">×</button>
+          <h1><span id="Kaupunki">Kaupunki</span> → <span id="Kohdemaa">Kohdemaa</span></h1>
+          <p><span id="whenD">Date</span> - <span id="VapaatPaikat">x</span> Available seats left <span id="Aika">Aika</span></p>
+          <div class="flightDetails">
+            <h2>View your flight details</h2>
+            <div class="flightInfo">
+              <p><strong>Depart</strong>: <span id="whenD">Date</span></p>
+              <p><span id="whenT">time</span> <span id="Kaupunki">Kaupunki</span> → <span id="whenT">time</span> <span id="Kohdemaa">Kohdemaa</span> (Duration: 1h 0m)</p>
+              <p><strong><span id="Kone">Kone</span></strong></p>
+            </div>
           </div>
+          <label for="passenger">Passengers</label>
+          <input type="number" id="passenger" name="passenger">
+          <div class="extras">
+            <p>Upgrades</p>
+            <label><input type="checkbox" value="5"> Extra Food</label>
+            <label><input type="checkbox" value="10"> Window Seat</label>
+            <label><input type="checkbox" value="50"> Alcohol</label>
+          </div>
+          <p><strong>€<span id="LipunHinta">hinta</span></strong></p>
+          <button class="payButton">Go Pay</button>
         </div>
-        <label for="passenger">Passengers</label>
-        <input type="number" id="passenger" name="passenger">
-        <div class="extras">
-          <p>Upgrades</p>
-          <label><input type="checkbox"> Extra Food</label>
-          <label><input type="checkbox"> Window Seat</label>
-          <label><input type="checkbox"> Alcohol</label>
-        </div>
-        <p>€(price)</p>
-        <button class="payButton">Go Pay</button>
-      </div>
+      </form>
     </div>
 
     <div class="flight-results">
@@ -107,7 +109,30 @@
 </div>
 
 <?php
+$servername = "localhost";
+$username = "admin";
+$password = "1d100tt1AR!";
+$dbname = "lennot";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT id, firstname, lastname FROM MyGuests";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+  }
+} else {
+  echo "0 results";
+}
+$conn->close();
 ?>
 
 </body>
