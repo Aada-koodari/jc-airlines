@@ -1,10 +1,3 @@
-function on() {
-    document.getElementById("overlay").style.display = "block";
-}
-
-function off() {
-    document.getElementById("overlay").style.display = "none";
-}
 
 function whatTime(x) {
     let Aika;
@@ -30,4 +23,9 @@ function checkSameCity() {
     } else {
         warning.style.display = "none";
     }
+}
+
+function saveFlightID(flightID) {
+    document.getElementById("flightID").value = flightID;
+    document.getElementById("bookingForm").submit();
 }

@@ -11,11 +11,15 @@
   }
 
   footer {
+    bottom: 0;
     height: auto;
+    width: 100%;
+    background-color: #f1f1f1;
   }
 
   header {
     background-color:#f1f1f1;
+    width: 100%;
     padding:15px;
   }
 
@@ -162,12 +166,10 @@
   
 .containerwhite {
     background-color: white;
-    position: absolute;
-    top: 10.78%;
-    right: 12.5%;
+    position: relative;
     margin: 20px;
     width: 75%;
-    height: 101%;
+    height: auto;
     padding: 16px;
     color: #000000;
 }

@@ -50,6 +50,49 @@
                 </div>
             </div>
 
+
+      <form>
+        <div>
+          <button class="closeButton" onclick="off()">×</button>
+          <h1><span id="Lähtö">Lähtö</span> → <span id="Kaupunki">Kaupunki</span></h1>
+          <p><span id="whenD">Date</span> - <span id="VapaatPaikat">x</span> Available seats left <span id="Aika">Aika</span></p>
+          <div class="flightDetails">
+            <h2>View your flight details</h2>
+            <div class="flightInfo">
+              <p><strong>Depart</strong>: <span id="whenD">Date</span></p>
+              <p><span id="whenT">time</span> <span id="Lähtö">Lähtö</span> → <span id="whenT">time</span> <span id="Kaupunki">Kaupunki</span> (Duration: 1h 0m)</p>
+              <p><strong><span id="Kone">Kone</span></strong></p>
+            </div>
+          </div>
+          <h2>Upgrades</h2>
+          <div class="extras">
+            <label><input type="checkbox" value="5"> Extra Food</label>
+            <label><input type="checkbox" value="10"> Window Seat</label>
+            <label><input type="checkbox" value="50"> Alcohol</label>
+          </div>
+          <p><strong><span id="LipunHinta">(hinta)</span></strong></p>
+          <button class="payButton">Go Pay</button>
+        </div>
+      </form>
+      <?php
+if (isset($_GET['hakuID'])) {
+    $hakuID = $_GET['hakuID'];
+
+    // Display payment form
+    echo "<h1>Payment for Booking #{$hakuID}</h1>";
+    echo "<form action='process_payment.php' method='POST'>
+            <input type='hidden' name='hakuID' value='{$hakuID}'>
+            <label for='cardNumber'>Card Number:</label>
+            <input type='text' name='cardNumber' required>
+            <button type='submit'>Pay</button>
+          </form>";
+} else {
+    echo "<p>No booking found.</p>";
+}
+?>
+
+
+
             <div class="col-50">
                 <h3>Payment</h3>
                 <label for="fname">Accepted Cards</label>

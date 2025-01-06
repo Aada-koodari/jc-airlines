@@ -4,14 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../all.css">
     <script>
-      function on() {
-    document.getElementById("overlay").style.display = "block";
-}
-
-function off() {
-    document.getElementById("overlay").style.display = "none";
-}
-
 function whatTime(x) {
     let Aika;
     if (x >= 6 && x <= 9) {
@@ -37,6 +29,11 @@ function checkSameCity() {
         warning.style.display = "none";
     }
 }
+function saveFlightID(flightID) {
+    document.getElementById("flightID").value = flightID; // Set the hidden field value
+    document.getElementById("bookingForm").submit(); // Submit the form explicitly
+}
+
     </script>
     <title>JC-Airlines</title>
     <link rel="icon" type="image/x-icon" href="../pictures/logo.png">
@@ -56,74 +53,48 @@ function checkSameCity() {
 <div class="bg">
   <div class="containerwhite">
   <form action="" method="POST" class="flightsearch">
-        <div class="row">
+      <div class="row">
         <div class="collumn-fs">
-    <p class="theText">* From: </p>
-    <select name="from" id="Lähtö" class="inputs" onchange="checkSameCity()">
-        <option value="" disabled selected>Select your option</option>
-        <option value="Tikkakoski">Tikkakoski</option>
-    </select>
-    <p class="theText">* To: </p>
-    <select name="to" id="Kaupunki" class="inputs" onchange="checkSameCity()">
-        <option value="" disabled selected>Select your option</option>
-        <option value="Oulu">Oulu</option>
-        <option value="Helsinki">Helsinki</option>
-        <option value="Rovaniemi">Rovaniemi</option>
-        <option value="Oslo">Oslo</option>
-        <option value="Bergen">Bergen</option>
-        <option value="Arlanda">Arlanda</option>
-        <option value="Göteborg">Göteborg</option>
-        <option value="Keflaki">Keflaki</option>
-        <option value="Malmö">Malmö</option>
-        <option value="Trondheim">Trondheim</option>
-        <option value="Billund">Billund</option>
-        <option value="Kööpenhamina">Kööpenhamina</option>
-    </select>
-    <p id="warning" style="color:red; display:none;">Warning: The selected cities are the same. Please choose different cities.</p>
-</div>
+          <p class="theText">* From: </p>
+          <select name="from" id="Lähtö" class="inputs" onchange="checkSameCity()" required>
+              <option value="" disabled selected>Select your option</option>
+              <option value="Tikkakoski">Tikkakoski</option>
+          </select>
+          <p class="theText">* To: </p>
+          <select name="to" id="Kaupunki" class="inputs" onchange="checkSameCity()" required>
+              <option value="" disabled selected>Select your option</option>
+              <option value="Oulu">Oulu</option>
+              <option value="Helsinki">Helsinki</option>
+              <option value="Rovaniemi">Rovaniemi</option>
+              <option value="Oslo">Oslo</option>
+              <option value="Bergen">Bergen</option>
+              <option value="Arlanda">Arlanda</option>
+              <option value="Göteborg">Göteborg</option>
+              <option value="Keflaki">Keflaki</option>
+              <option value="Malmö">Malmö</option>
+              <option value="Trondheim">Trondheim</option>
+              <option value="Billund">Billund</option>
+              <option value="Kööpenhamina">Kööpenhamina</option>
+          </select>
+          <p id="warning" style="color:red; display:none;">Warning: The selected cities are the same. Please choose different cities.</p>
+        </div>
             <div class="collumn-fs">
               <p class="theText">* Date: </p>
-              <input type="date" id="whenD" name="whenD" class="inputs">
+              <input type="date" id="whenD" name="whenD" class="inputs" required>
               <p class="theText">* Time: </p>
-              <input type="time" id="whenT" name="whenT" class="inputs">
+              <input type="time" id="whenT" name="whenT" class="inputs" required>
             </div>
             <div class="collumn-fs">
               <p class="theText">* Passengers: </p>
-              <input type="number" id="passenger" name="passenger" class="inputs">
+              <input type="number" id="passenger" name="passenger" class="inputs" required>
             </div>
-        </div>
+      </div>
         <div class="row">
           <div class="collumn-fs2">
               <input type="submit" id="submit" class="SUBMIT" value="Find Flights" onclick="checkSameCity()">
           </div>
         </div>
     </form>
-
-    <div id="overlay">
-      <form>
-        <div id="overlayContent">
-          <button class="closeButton" onclick="off()">×</button>
-          <h1><span id="Lähtö">Lähtö</span> → <span id="Kaupunki">Kaupunki</span></h1>
-          <p><span id="whenD">Date</span> - <span id="VapaatPaikat">x</span> Available seats left <span id="Aika">Aika</span></p>
-          <div class="flightDetails">
-            <h2>View your flight details</h2>
-            <div class="flightInfo">
-              <p><strong>Depart</strong>: <span id="whenD">Date</span></p>
-              <p><span id="whenT">time</span> <span id="Lähtö">Lähtö</span> → <span id="whenT">time</span> <span id="Kaupunki">Kaupunki</span> (Duration: 1h 0m)</p>
-              <p><strong><span id="Kone">Kone</span></strong></p>
-            </div>
-          </div>
-          <h2>Upgrades</h2>
-          <div class="extras">
-            <label><input type="checkbox" value="5"> Extra Food</label>
-            <label><input type="checkbox" value="10"> Window Seat</label>
-            <label><input type="checkbox" value="50"> Alcohol</label>
-          </div>
-          <p><strong><span id="LipunHinta">(hinta)</span></strong></p>
-          <button class="payButton">Go Pay</button>
-        </div>
-      </form>
-    </div>
 
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -145,6 +116,7 @@ function checkSameCity() {
           $city = $_POST['to'];
           $whenD = $_POST['whenD'];  // Date is not used, but kept for professionalism
           $whenT = $_POST['whenT'];  // Time is provided but not used for filtering
+          $passengers = $_POST['passenger'];
 
           // SQL query to fetch flights based on the search criteria
           $sql = "SELECT LentoID, Kohdemaa, Kaupunki, Aika, Kone, LipunHinta, VapaatPaikat 
@@ -163,38 +135,87 @@ function checkSameCity() {
             while ($row = $result->fetch_assoc()) {
                 $departureTime = date('H:i', strtotime($row["Aika"])); // Format time
                 $departureDate = date('l, F j', strtotime($whenD)); // Format date to show weekday and full date
+                $flightID = $row["LentoID"];
+                $price = $row["LipunHinta"];
+                $seats = $row["VapaatPaikat"];
         
-                // Output flight information and add JS to open overlay with data
-                echo "<div class='flight-results'>
-                        <div class='flight-listing'>
-                            <div class='flight-info'>
-                                <p>$departureTime $departureDate Tikkakoski</p>
-                                <p>$departureTime $departureDate $city</p>
-                            </div>
-                            <div class='flight-details'>
-                                <p>Time of departure: $departureTime</p>
-                                <p>Available seats left: " . $row["VapaatPaikat"] . "</p>
-                            </div>
-                            <div class='flight-company'>
-                                <p>JC-Airlines (Takes approx 2 hours)</p>
-                                <p class='details' onclick=\"on('$departureTime', '$departureDate', '$city', '" . $row["VapaatPaikat"] . "', '€" . $row["LipunHinta"] . "')\">Details and upgrades</p>
-                            </div>
-                            <div class='flight-price'>
-                                <p>€" . $row["LipunHinta"] . "</p>
-                                <button class='viewDeal' onclick=\"on('$departureTime', '$departureDate', '$city', '" . $row["VapaatPaikat"] . "', '€" . $row["LipunHinta"] . "')\">View Deal ></button>
+                // Output flight information and add a form for "Choose Deal"
+                echo "<form action='/payment.php' method='POST' class='flight-result-form'>
+                        <div class='flight-results'>
+                            <div class='flight-listing'>
+                                <div class='flight-info'>
+                                    <p>$departureTime $departureDate Tikkakoski</p>
+                                    <p>$departureTime $departureDate $city</p>
+                                </div>
+                                <div class='flight-details'>
+                                    <p>Time of departure: $departureTime</p>
+                                    <p>Available seats left: $seats</p>
+                                </div>
+                                <div class='flight-company'>
+                                    <p>JC-Airlines (Takes approx 2 hours)</p>
+                                    <p class='details'>Details and upgrades</p>
+                                </div>
+                                <div class='flight-price'>
+                                    <p>€$price</p>
+                                    <input type='hidden' name='flightID' value='$flightID'>
+                                    <input type='hidden' name='from' value='Tikkakoski'>
+                                    <input type='hidden' name='to' value='$city'>
+                                    <input type='hidden' name='whenD' value='$whenD'>
+                                    <input type='hidden' name='whenT' value='$whenT'>
+                                    <input type='hidden' name='passenger' value='{$_POST['passenger']}'>
+                                    <button type='submit' class='viewDeal' onclick='saveFlightID({$row["LentoID"]})'>Choose Deal ></button>
+                                </div>
                             </div>
                         </div>
-                    </div>";
+                    </form>";
             }
         } else {
             echo "<p>No flights found matching your criteria.</p>";
         }
         
-
           // Close connection
           $stmt->close();
           $conn->close();
         }
+?>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Database connection
+    $servername = "localhost";
+    $username = "admin";
+    $password = "1d100tt1AR!";
+    $dbname = "lennotwpdp";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Fetch submitted data
+    $wherefrom = $_POST['from'];
+    $whereto = $_POST['to'];
+    $date = $_POST['whenD'];
+    $time = $_POST['whenT'];
+    $passengers = $_POST['passenger'];
+    $flightID = $_POST['flightID'];
+
+    // Save booking
+    $sql = "INSERT INTO haku (Wherefrom, Whereto, passengers, date, time, LentoID)
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssissi", $wherefrom, $whereto, $passengers, $date, $time, $flightID);
+
+    if ($stmt->execute()) {
+        header("Location: payment_page.php?hakuID=" . $conn->insert_id);
+        exit();
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
 ?>
 
 
