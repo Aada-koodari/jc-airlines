@@ -72,11 +72,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         if ($stmt_passenger = $conn->prepare($sql_passenger)) {
                             $stmt_passenger->bind_param("issss", $tilausID, $passenger['name'], $passenger['address'], $passenger['email'], $passenger['phone']);
                             $stmt_passenger->execute();
+
+                            /*// Send confirmation email to passenger
+                            $to = $passenger['email']; // Send email to passenger's email address
+                            $subject = "Flight Booking Confirmation";
+                            $txt = "Hello " . $passenger['name'] . "!\n\n" .
+                                   "Your flight details are as follows:\n" .
+                                   "PVM: " . $pvm . "\n" .
+                                   "Lennon ajankohta: " . $lennonAjankohta . "\n" .
+                                   "Kohde kaupunki: " . $kohdeKaupunki . "\n" .
+                                   "Lippujen maara: " . $lippujenMaara . "\n";
+                            $headers = "From: JC-airlines@example.com" . "\r\n" .
+                                       "CC: somebodyelse@example.com";
+
+                            if (mail($to, $subject, $txt, $headers)) {
+                                echo "Booking successfully made and confirmation email sent to " . $passenger['email'] . "!";
+                            } else {
+                                echo "Booking was successful, but there was an issue sending the confirmation email to " . $passenger['email'] . ".";
+                            }*/
                         }
                     }
                 }
-
-                echo "Booking successfully made!";
             } else {
                 echo "Error executing booking query: " . $stmt->error;
             }
@@ -89,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
