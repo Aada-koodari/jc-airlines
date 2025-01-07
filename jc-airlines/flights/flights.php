@@ -59,88 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../all.css">
-    <script>
-        // Store user inputs in sessionStorage to persist across page refreshes
-        function storeUserInputs() {
-            var from = document.getElementById("Lähtö").value;
-            var to = document.getElementById("Kaupunki").value;
-            var date = document.getElementById("whenD").value;
-            var time = document.getElementById("whenT").value;
-            var passengers = document.getElementById("passenger").value;
-
-            // Store in sessionStorage
-            sessionStorage.setItem('from', from);
-            sessionStorage.setItem('to', to);
-            sessionStorage.setItem('date', date);
-            sessionStorage.setItem('time', time);
-            sessionStorage.setItem('passengers', passengers);
-        }
-
-        // Function to populate the form with stored data
-        function loadUserInputs() {
-            var from = sessionStorage.getItem('from');
-            var to = sessionStorage.getItem('to');
-            var date = sessionStorage.getItem('date');
-            var time = sessionStorage.getItem('time');
-            var passengers = sessionStorage.getItem('passengers');
-
-            if (from && to && date && time && passengers) {
-                document.getElementById("Lähtö").value = from;
-                document.getElementById("Kaupunki").value = to;
-                document.getElementById("whenD").value = date;
-                document.getElementById("whenT").value = time;
-                document.getElementById("passenger").value = passengers;
-            }
-        }
-
-        // Open the overlay
-        function on() {
-            document.getElementById("overlay").style.display = "block";
-        }
-
-        // Close the overlay
-        function off() {
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        // Prevent form submission and open overlay
-        function openOverlay(event) {
-            event.preventDefault(); // Prevent the form from submitting
-            on(); // Show the overlay
-
-            // Get the flightID and other user inputs
-            var flightID = event.target.getAttribute('data-flight-id');
-            var pvm = document.getElementById("whenD").value; // Get the date (pvm)
-            var lennonAjankohta = document.getElementById("whenT").value; // Get the time (Lennon ajankohta)
-            var kohdeKaupunki = document.getElementById("Kaupunki").value; // Get destination city
-            var lippujenMaara = document.getElementById("passenger").value; // Get the number of tickets (lippujen maara)
-
-            // Set the flight data for submission
-            document.getElementById("flightID").value = flightID;
-            document.getElementById("pvm").value = pvm;
-            document.getElementById("lennonAjankohta").value = lennonAjankohta;
-            document.getElementById("kohdeKaupunki").value = kohdeKaupunki;
-            document.getElementById("lippujenMaara").value = lippujenMaara;
-        }
-
-        // Submit the form data and redirect to payment page
-        function submitBooking() {
-            document.getElementById("bookingForm").submit();
-        }
-
-    </script>
     <title>JC-Airlines</title>
     <link rel="icon" type="image/x-icon" href="../pictures/logo.png">
 </head>
 <body onload="loadUserInputs()">
 
 <header>
-    <img src="../pictures/logo+name.png" alt="logo and name" href="index.html">
+    <img src="../pictures/logo+name.png" alt="logo and name" href="index.php">
     <div class="menu">
-        <a class="menuitem" href="../help/help.html">Help</a>
-        <a class="menuitem" href="../company/company.html">Company</a>
-        <a class="menuitem" href="../shops&dining/shops&dining.html">Shops & Dining</a>
-        <a class="menuitem" href="../flights/flights.html">Flights</a>
+        <a class="menuitem" href="../help/help.php">Help</a>
+        <a class="menuitem" href="../company/company.php">Company</a>
+        <a class="menuitem" href="../shops&dining/s&d.php">Shops & Dining</a>
+        <a class="menuitem" href="../flights/flights.php">Flights</a>
     </div>
 </header>
 
@@ -298,15 +228,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
       <div class="column" style="text-align: center;">
         <h3>Discover</h3>
-        <p>Flights</p>
-        <p>Shops</p>
-        <p>Dining</p>
+        <p href="../flights/flights.php">Flights</p>
+        <p href="../shops&dining/s&d.php">Shops</p>
+        <p href="../shops&dining/s&d.php">Dining</p>
       </div>
       <div class="column" style="text-align: center;">
         <h3>Company</h3>
-        <p>History</p>
-        <p>Planes</p>
-        <p>Awards</p>
+        <p href="../company/company.php">History</p>
+        <p href="../company/company.php">Planes</p>
+        <p href="../company/company.php">Awards</p>
       </div>
       <div class="columnr">
         <p>© 2024 – JC-Airlines</p>

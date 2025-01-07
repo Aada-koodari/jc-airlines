@@ -112,109 +112,18 @@ $conn->close();
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../all.css">
-    <script>
-        // Function to show flight details and display the passenger input form
-        function showFlightDetails() {
-            const flightData = <?php echo json_encode($flightDetails); ?>;
-
-            // Fill in the flight details dynamically
-            document.getElementById('flightDate').innerText = flightData.date;
-            document.getElementById('flightTime').innerText = flightData.time;
-            document.getElementById('departureCity').innerText = flightData.whereFrom;
-            document.getElementById('destinationCity').innerText = flightData.whereTo;
-            document.getElementById('ticketCount').innerText = flightData.passengers;
-
-            // Show the correct number of passenger input fields based on the number of tickets
-            const ticketCount = flightData.passengers;
-            const passengerForm = document.getElementById('passengerForm');
-            passengerForm.innerHTML = '';  // Clear any existing fields
-
-            for (let i = 0; i < ticketCount; i++) {
-                const passengerDiv = document.createElement('div');
-                passengerDiv.classList.add('passenger');
-                passengerDiv.innerHTML = `
-                    <h4>Passenger ${i + 1}</h4>
-                    <input type="text" class="name" placeholder="Full Name" name="passengers[${i}][name]" required>
-                    <input type="text" class="address" placeholder="Address" name="passengers[${i}][address]" required>
-                    <input type="email" class="email" placeholder="Email" name="passengers[${i}][email]" required>
-                    <input type="tel" class="phone" placeholder="Phone Number" name="passengers[${i}][phone]" required>
-                `;
-                passengerForm.appendChild(passengerDiv);
-            }
-
-            // Show the form with the generated passenger fields
-            passengerForm.style.display = 'block';
-        }
-
-        // Handle form submission
-        function submitBooking() {
-            const passengers = document.getElementsByClassName('passenger');
-            const passengerDetails = [];
-
-            // Collect passenger details
-            for (let i = 0; i < passengers.length; i++) {
-                const name = passengers[i].querySelector('.name').value;
-                const address = passengers[i].querySelector('.address').value;
-                const email = passengers[i].querySelector('.email').value;
-                const phone = passengers[i].querySelector('.phone').value;
-
-                passengerDetails.push({ name, address, email, phone });
-            }
-
-            // Add passenger details to the form and submit
-            const form = document.getElementById('bookingForm');
-            const passengerInput = document.createElement('input');
-            passengerInput.type = 'hidden';
-            passengerInput.name = 'passengers';
-            passengerInput.value = JSON.stringify(passengerDetails);
-            form.appendChild(passengerInput);
-
-            // Get flight details from the already displayed values and add them to the form
-            const pvm = document.getElementById('flightDate').innerText;
-            const lennonAjankohta = document.getElementById('flightTime').innerText;
-            const kohdeKaupunki = document.getElementById('destinationCity').innerText;
-            const lippujenMaara = document.getElementById('ticketCount').innerText;
-
-            const pvmInput = document.createElement('input');
-            pvmInput.type = 'hidden';
-            pvmInput.name = 'pvm';
-            pvmInput.value = pvm;
-            form.appendChild(pvmInput);
-
-            const lennonAjankohtaInput = document.createElement('input');
-            lennonAjankohtaInput.type = 'hidden';
-            lennonAjankohtaInput.name = 'lennonAjankohta';
-            lennonAjankohtaInput.value = lennonAjankohta;
-            form.appendChild(lennonAjankohtaInput);
-
-            const kohdeKaupunkiInput = document.createElement('input');
-            kohdeKaupunkiInput.type = 'hidden';
-            kohdeKaupunkiInput.name = 'kohdeKaupunki';
-            kohdeKaupunkiInput.value = kohdeKaupunki;
-            form.appendChild(kohdeKaupunkiInput);
-
-            const lippujenMaaraInput = document.createElement('input');
-            lippujenMaaraInput.type = 'hidden';
-            lippujenMaaraInput.name = 'lippujenMaara';
-            lippujenMaaraInput.value = lippujenMaara;
-            form.appendChild(lippujenMaaraInput);
-
-            // Submit the form
-            form.submit();
-        }
-    </script>
     <title>JC-Airlines</title>
     <link rel="icon" type="image/x-icon" href="../pictures/logo.png">
 </head>
 <body onload="showFlightDetails()">
 
 <header>
-    <img src="../pictures/logo+name.png" alt="logo and name" href="index.html">
+    <img src="../pictures/logo+name.png" alt="logo and name" href="index.php">
     <div class="menu">
-        <a class="menuitem" href="../help/help.html">Help</a>
-        <a class="menuitem" href="../company/company.html">Company</a>
-        <a class="menuitem" href="../shops&dining/shops&dining.html">Shops & Dining</a>
-        <a class="menuitem" href="../flights/flights.html">Flights</a>
+        <a class="menuitem" href="../help/help.php">Help</a>
+        <a class="menuitem" href="../company/company.php">Company</a>
+        <a class="menuitem" href="../shops&dining/s&d.php">Shops & Dining</a>
+        <a class="menuitem" href="../flights/flights.php">Flights</a>
     </div>
 </header>
 
@@ -235,34 +144,33 @@ $conn->close();
     </div>
 </div>
 
+</body>
 <footer>
     <div class="row">
-        <div class="column">
-            <img src="../pictures/logo+name.png" alt="logo and name" style="height: auto;width: 90%;">
-            <h3>Contact</h3>
-            <img src="../pictures/call_us.png" style="float: left">
-            <p name="phoneNumb" id="phoneNumb">+354 08433443</p>
-            <br>
-            <img src="../pictures/where.png" style="float: left">
-            <p name="where" id="where">Tikkakoski, Finland</p>
-        </div>
-        <div class="column" style="text-align: center;">
-            <h3>Discover</h3>
-            <p>Flights</p>
-            <p>Shops</p>
-            <p>Dining</p>
-        </div>
-        <div class="column" style="text-align: center;">
-            <h3>Company</h3>
-            <p>History</p>
-            <p>Planes</p>
-            <p>Awards</p>
-        </div>
-        <div class="columnr">
-            <p>© 2024 – JC-Airlines</p>
-        </div>
+      <div class="column">
+        <img src="../pictures/logo+name.png" alt="logo and name" style="height: auto;width: 90%;">
+        <h3>Contact</h3>
+        <img src="../pictures/call_us.png" style="float: left">
+        <p name="phoneNumb" id="phoneNumb">+354 08433443</p>
+        <br>
+        <img src="../pictures/where.png" style="float: left">
+        <p name="where" id="where">Tikkakoski, Finland</p>
+      </div>
+      <div class="column" style="text-align: center;">
+        <h3>Discover</h3>
+        <p href="../flights/flights.php">Flights</p>
+        <p href="../shops&dining/s&d.php">Shops</p>
+        <p href="../shops&dining/s&d.php">Dining</p>
+      </div>
+      <div class="column" style="text-align: center;">
+        <h3>Company</h3>
+        <p href="../company/company.php">History</p>
+        <p href="../company/company.php">Planes</p>
+        <p href="../company/company.php">Awards</p>
+      </div>
+      <div class="columnr">
+        <p>© 2024 – JC-Airlines</p>
+      </div>
     </div>
 </footer>
-
-</body>
 </html>

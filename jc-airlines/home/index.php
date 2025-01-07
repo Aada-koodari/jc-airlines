@@ -12,10 +12,10 @@
 <header>
     <img src="../pictures/logo+name.png" alt="logo and name" href="index.php">
     <div class="menu">
-        <div class="menuitem" href="../help/help.php">Help</div>
-        <div class="menuitem" href="../company/company.php">Company</div>
-        <div class="menuitem" href="../shops&dining/shops&dining.php">Shops & Dining</div>
-        <div class="menuitem" href="../flights/flights.php">Flights</div>
+        <a class="menuitem" href="../help/help.php">Help</a>
+        <a class="menuitem" href="../company/company.php">Company</a>
+        <a class="menuitem" href="../shops&dining/s&d.php">Shops & Dining</a>
+        <a class="menuitem" href="../flights/flights.php">Flights</a>
     </div>
 </header>
 
@@ -101,15 +101,15 @@
       </div>
       <div class="column" style="text-align: center;">
         <h3>Discover</h3>
-        <p>Flights</p>
-        <p>Shops</p>
-        <p>Dining</p>
+        <p href="../flights/flights.php">Flights</p>
+        <p href="../shops&dining/s&d.php">Shops</p>
+        <p href="../shops&dining/s&d.php">Dining</p>
       </div>
       <div class="column" style="text-align: center;">
         <h3>Company</h3>
-        <p>History</p>
-        <p>Planes</p>
-        <p>Awards</p>
+        <p href="../company/company.php">History</p>
+        <p href="../company/company.php">Planes</p>
+        <p href="../company/company.php">Awards</p>
       </div>
       <div class="columnr">
         <p>© 2024 – JC-Airlines</p>
