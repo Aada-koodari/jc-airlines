@@ -1,4 +1,11 @@
-
+function on() {
+    document.getElementById("overlay").style.display = "block";
+  }
+  
+  function off() {
+    document.getElementById("overlay").style.display = "none";
+  }
+  
 function whatTime(x) {
     let Aika;
     if (x >= 6 && x <= 9) {
