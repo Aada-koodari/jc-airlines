@@ -1,4 +1,4 @@
-<?php
+<?php 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Ensure that the required data is set
     if (isset($_POST['flightID'], $_POST['pvm'], $_POST['lennonAjankohta'], $_POST['kohdeKaupunki'], $_POST['lippujenMaara'])) {
@@ -60,6 +60,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../all.css">
     <script>
+        // Store user inputs in sessionStorage to persist across page refreshes
+        function storeUserInputs() {
+            var from = document.getElementById("Lähtö").value;
+            var to = document.getElementById("Kaupunki").value;
+            var date = document.getElementById("whenD").value;
+            var time = document.getElementById("whenT").value;
+            var passengers = document.getElementById("passenger").value;
+
+            // Store in sessionStorage
+            sessionStorage.setItem('from', from);
+            sessionStorage.setItem('to', to);
+            sessionStorage.setItem('date', date);
+            sessionStorage.setItem('time', time);
+            sessionStorage.setItem('passengers', passengers);
+        }
+
+        // Function to populate the form with stored data
+        function loadUserInputs() {
+            var from = sessionStorage.getItem('from');
+            var to = sessionStorage.getItem('to');
+            var date = sessionStorage.getItem('date');
+            var time = sessionStorage.getItem('time');
+            var passengers = sessionStorage.getItem('passengers');
+
+            if (from && to && date && time && passengers) {
+                document.getElementById("Lähtö").value = from;
+                document.getElementById("Kaupunki").value = to;
+                document.getElementById("whenD").value = date;
+                document.getElementById("whenT").value = time;
+                document.getElementById("passenger").value = passengers;
+            }
+        }
+
         // Open the overlay
         function on() {
             document.getElementById("overlay").style.display = "block";
@@ -82,47 +115,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             var kohdeKaupunki = document.getElementById("Kaupunki").value; // Get destination city
             var lippujenMaara = document.getElementById("passenger").value; // Get the number of tickets (lippujen maara)
 
-            // Send data via AJAX to the server
-            var formData = new FormData();
-            formData.append('flightID', flightID);
-            formData.append('pvm', pvm);
-            formData.append('lennonAjankohta', lennonAjankohta);
-            formData.append('kohdeKaupunki', kohdeKaupunki);
-            formData.append('lippujenMaara', lippujenMaara);
-
-            // Make an AJAX request to send the data to the server
-            fetch('', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Redirect to payment page with the new hakuID
-                    window.location.href = 'payment.php?hakuID=' + data.hakuID;
-                } else {
-                    alert('Error processing booking');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            // Set the flight data for submission
+            document.getElementById("flightID").value = flightID;
+            document.getElementById("pvm").value = pvm;
+            document.getElementById("lennonAjankohta").value = lennonAjankohta;
+            document.getElementById("kohdeKaupunki").value = kohdeKaupunki;
+            document.getElementById("lippujenMaara").value = lippujenMaara;
         }
 
-        // Show the user input list and hide flight results initially
-        function showUserInput() {
-            var userInputs = document.getElementById("userInputList");
-            userInputs.style.display = "none";  // Hide the user input list
-
-            // Show the flight results after form submission
-            var flightResults = document.getElementById("flightResults");
-            flightResults.style.display = "block";  // Show the flight results
+        // Submit the form data and redirect to payment page
+        function submitBooking() {
+            document.getElementById("bookingForm").submit();
         }
+
     </script>
     <title>JC-Airlines</title>
     <link rel="icon" type="image/x-icon" href="../pictures/logo.png">
 </head>
-<body>
+<body onload="loadUserInputs()">
 
 <header>
     <img src="../pictures/logo+name.png" alt="logo and name" href="index.html">
@@ -136,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class="bg">
     <div class="containerwhite">
-        <form id="bookingForm" action="" method="POST" class="flightsearch">
+        <form id="bookingForm" action="" method="POST" class="flightsearch" onsubmit="storeUserInputs()">
             <div class="row">
                 <div class="collumn-fs">
                     <p class="theText">* From: </p>
@@ -174,16 +184,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="row">
                 <div class="collumn-fs2">
-                    <input type="button" id="submit" class="SUBMIT" value="Find Flights" onclick="showUserInput()">
+                    <input type="submit" id="submit" class="SUBMIT" value="Find Flights">
                 </div>
             </div>
         </form>
 
-        <div id="userInputList" style="margin-top: 20px; display: none;">
-            <!-- User input summary will be shown here, but we hide it on page load -->
-        </div>
-
-        <div id="flightResults" style="display: none;"> <!-- Initially hidden -->
+        <div id="flightResults" style="display: block;">
             <?php
                 $servername = "localhost";
                 $username = "admin";
@@ -264,33 +270,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
+<!-- The overlay popup -->
+<div id="overlay" style="display: none;">
+    <div id="text">Continue</div>
+    <button onclick="off()">No</button>
+    <form id="bookingForm" method="POST" action="">
+        <input type="hidden" id="flightID" name="flightID">
+        <input type="hidden" id="pvm" name="pvm">
+        <input type="hidden" id="lennonAjankohta" name="lennonAjankohta">
+        <input type="hidden" id="kohdeKaupunki" name="kohdeKaupunki">
+        <input type="hidden" id="lippujenMaara" name="lippujenMaara">
+        <button type="submit" onclick="submitBooking()">Yes</button>
+    </form>
+</div>
+
 </body>
 <footer>
     <div class="row">
-        <div class="column">
-            <img src="../pictures/logo+name.png" alt="logo and name" style="height: auto;width: 90%;">
-            <h3>Contact</h3>
-            <img src="../pictures/call_us.png" style="float: left">
-            <p name="phoneNumb" id="phoneNumb">+354 08433443</p>
-            <br>
-            <img src="../pictures/where.png" style="float: left">
-            <p name="where" id="where">Tikkakoski, Finland</p>
-        </div>
-        <div class="column" style="text-align: center;">
-            <h3>Discover</h3>
-            <p>Flights</p>
-            <p>Shops</p>
-            <p>Dining</p>
-        </div>
-        <div class="column" style="text-align: center;">
-            <h3>Company</h3>
-            <p>History</p>
-            <p>Planes</p>
-            <p>Awards</p>
-        </div>
-        <div class="columnr">
-            <p>© 2024 – JC-Airlines</p>
-        </div>
+      <div class="column">
+        <img src="../pictures/logo+name.png" alt="logo and name" style="height: auto;width: 90%;">
+        <h3>Contact</h3>
+        <img src="../pictures/call_us.png" style="float: left">
+        <p name="phoneNumb" id="phoneNumb">+354 08433443</p>
+        <br>
+        <img src="../pictures/where.png" style="float: left">
+        <p name="where" id="where">Tikkakoski, Finland</p>
+      </div>
+      <div class="column" style="text-align: center;">
+        <h3>Discover</h3>
+        <p>Flights</p>
+        <p>Shops</p>
+        <p>Dining</p>
+      </div>
+      <div class="column" style="text-align: center;">
+        <h3>Company</h3>
+        <p>History</p>
+        <p>Planes</p>
+        <p>Awards</p>
+      </div>
+      <div class="columnr">
+        <p>© 2024 – JC-Airlines</p>
+      </div>
     </div>
 </footer>
 </html>
